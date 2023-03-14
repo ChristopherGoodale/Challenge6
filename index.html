@@ -9,14 +9,18 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="flex flex-col bg-[#D8ecfd]">
+<body class="flex flex-col bg-[#7f8c96]">
     <!-- Weather Header -->
-    <div class="flex-column p-4 w-5/6 m-auto text-center bg-[#229ce9] text-white text-xl font-bold">
-        <div class="flex-column text-center">
+    <div class="flex-row p-4 w-5/6 m-auto text-center bg-[#229ce9] text-white text-xl font-bold">
+        <div class="flex text-center">
             <img class="flex h-full w-1/5"
-                src="./assets/IMG/png-clipart-wizard-illustration-magician-wizard-free-purple-fictional-character.png">
-            <p class="flex">"All of your weather predictive needs in one spot" ~Merlin</p>
-            <H1 class="">WEATHER WIZARD</H1>
+                src="./assets/png-clipart-wizard-illustration-magician-wizard-free-purple-fictional-character.png">
+            <div class="flex-col  text-center w-full justify-center">
+                <H1 class="flex content-center justify-center h-1/2 p-auto">WEATHER WIZARD</H1>
+                <p class="flex content-center justify-center h-1/2 p-auto">"All of your weather predictive needs in one
+                    spot" ~Merlin
+                </p>
+            </div>
         </div>
 
     </div>
@@ -26,7 +30,7 @@
             <div class="flex flex-col items-center py-4 gap-2 bg-[#b1d9fb]">
                 <h2 class="text-[#229ce9] font-semibold text-lg">CITY NAME</h2>
                 <input class="w-3/4 border-2 border-[#229ce9] h-12 text-center md:w-4/5" type="text" id="cityCriteria"
-                    placeholder="Enter City Name">
+                    placeholder="Are there any cities you want to search?">
                 <button class="border-2 border-[#229ce9] w-3/4 h-12 md:w-4/5 " id="searchBtn">S E A R C H</button>
             </div>
             <div class="flex flex-col gap-2 p-4" id="searchAreaDiv"></div>
@@ -36,23 +40,18 @@
             <div id="fiveDayDiv">
                 <div class="flex-col">
                     <div class="font-bold text-lg" id="cityName"></div>
-                    <div id="currentTemp"></div>
-                    <div id="currentWind"></div>
-                    <div id="currentHumidity"></div>
+                    <div id="nowTemp"></div>
+                    <div id="nowWind"></div>
+                    <div id="nowHumidity"></div>
                 </div>
                 <div>
-                    <img src="" alt="" id="currentIcon">
+                    <img src="" alt="" id="nowIcon">
                 </div>
             </div>
             <!-- 5 Day Weather -->
             <div class="w-100 py-4 flex flex-col xl:flex-row gap-2 justify-between" id="forcastDiv">
             </div>
         </div>
-        <!-- Last 10 Searches -->
-
-        <!-- Current Section -->
-
-        <!-- 5 Day Weather Forcast -->
     </main>
 </body>
 <script src="./assets/script.js"></script>

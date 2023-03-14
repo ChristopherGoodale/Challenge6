@@ -1,29 +1,29 @@
 // GLOBAL VARIABLES
-let searchBtn = document.querySelector("#searchBtn");
 let cityCriteria = document.querySelector("#cityCriteria");
-let currentTemp = document.querySelector("#currentTemp");
-let currentWind = document.querySelector("#currentWind");
-let currentHumidity = document.querySelector("#currentHumidity");
-let currentIcon = document.querySelector("#currentIcon");
-let forecastDiv = document.querySelector("#forcastDiv");
-let searchAreaDiv = document.querySelector("#searchAreaDiv");
 let cityName = document.querySelector("#cityName");
 let fiveDayDiv = document.querySelector("#fiveDayDiv");
+let forecastDiv = document.querySelector("#forcastDiv");
+let nowHumidity = document.querySelector("#nowHumidity");
+let nowIcon = document.querySelector("#nowIcon");
+let nowTemp = document.querySelector("#nowTemp");
+let nowWind = document.querySelector("#nowWind");
+let searchAreaDiv = document.querySelector("#searchAreaDiv");
+let searchBtn = document.querySelector("#searchBtn");
 
 let appId = "6f57d6d3c3e1f8a8f7f076e94dc36c01";
 let searchHistory = [];
-let cityToSearch = cityCriteria.value;
-// let searchHistoryBtnClick = document.getElementsByName("cityButton");
-// divs on the side of the HTML
+let hcityToSearch = cityCriteria.value;
+
 
 // FUNCTIONS
 function init() {
     // grab last search results from local storage, place on left side of page
-    searchHistory = JSON.parse(localStorage.getItem("citySearch")) || [];
+    searchHistory = JSON.parse(localStorage.getItem("cityCriteria")) || [];
     searchAreaDiv.innerHTML = "";
     searchHistory.forEach((search) => {
         let searchHistoryBtn = document.createElement("button");
         searchHistoryBtn.textContent = search.charAt(0).toUpperCase() + search.slice(1).toLowerCase();
+        //       searchHistoryBtn.textContent = search.charAt(0).toUpperCase() + search.slice(1).toLowerCase();
         searchHistoryBtn.setAttribute("class", "bg-[#0197f6] w-full p-4 text-white font-bold");
         searchHistoryBtn.setAttribute("id", "searchHistoryBtn");
         searchHistoryBtn.setAttribute("name", "cityButton");
@@ -48,13 +48,13 @@ function citySearch() {
 
             let date = data.list[0].dt_txt.split(" ");
             let [year, month, day] = date[0].split("-");
-            let currentDate = [month, day, year].join("-");
-            cityName.innerHTML = `${data.city.name} (${currentDate})`;
-            currentTemp.innerHTML = `TEMP: ${data.list[0].main.temp}`;
-            currentWind.innerHTML = `WIND: ${data.list[0].wind.speed}`;
-            currentHumidity.innerHTML = `HUMIDITY: ${data.list[0].main.humidity}%`;
-            currentIcon.src = `https://openweathermap.org/img/w/${data.list[0].weather[0].icon}.png`;
-            currentIcon.alt = `${data.list[0].weather[0].main} icon`;
+            let nowDate = [month, day, year].join("-");
+            cityName.innerHTML = `${data.city.name} (${nowDate})`;
+            nowTemp.innerHTML = `TEMP: ${data.list[0].main.temp}`;
+            nowWind.innerHTML = `WIND: ${data.list[0].wind.speed}`;
+            nowHumidity.innerHTML = `HUMIDITY: ${data.list[0].main.humidity}%`;
+            nowIcon.src = `https://openweathermap.org/img/w/${data.list[0].weather[0].icon}.png`;
+            nowIcon.alt = `${data.list[0].weather[0].main} icon`;
 
             // Five day Forecast
 
@@ -88,7 +88,7 @@ function citySearch() {
 function searchHistoryFunction() {
     cityToSearch = this.getAttribute("city");
     city.value = cityToSearch;
-    citySearch();
+    cityCriteria();
 }
 
 // EVENT LISTENERS
