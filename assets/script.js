@@ -1,8 +1,8 @@
 // GLOBAL VARIABLES
 let cityCriteria = document.querySelector("#cityCriteria");
 let cityName = document.querySelector("#cityName");
-let fiveDayDiv = document.querySelector("#fiveDayDiv");
-let forecastDiv = document.querySelector("#forcastDiv");
+let fiveDayForecastDiv = document.querySelector("#fiveDayForecastDiv");
+let forecastDiv = document.querySelector("#forecastDiv");
 let nowHumidity = document.querySelector("#nowHumidity");
 let nowIcon = document.querySelector("#nowIcon");
 let nowTemp = document.querySelector("#nowTemp");
@@ -12,7 +12,7 @@ let searchBtn = document.querySelector("#searchBtn");
 
 let appId = "6f57d6d3c3e1f8a8f7f076e94dc36c01";
 let searchHistory = [];
-let hcityToSearch = cityCriteria.value;
+let searchCity = cityCriteria.value;
 
 
 // FUNCTIONS
@@ -22,7 +22,7 @@ function init() {
     searchAreaDiv.innerHTML = "";
     searchHistory.forEach((search) => {
         let searchHistoryBtn = document.createElement("button");
-        searchHistoryBtn.textContent = search.charAt(0).toUpperCase() + search.slice(1).toLowerCase();
+        searchHistoryBtn.textContent = search.toUpperCase();
         //       searchHistoryBtn.textContent = search.charAt(0).toUpperCase() + search.slice(1).toLowerCase();
         searchHistoryBtn.setAttribute("class", "bg-[#0197f6] w-full p-4 text-white font-bold");
         searchHistoryBtn.setAttribute("id", "searchHistoryBtn");
@@ -45,7 +45,6 @@ function citySearch() {
         .then(function (data) {
             // Clear Previous Information
             forecastDiv.innerHTML = "";
-
             let date = data.list[0].dt_txt.split(" ");
             let [year, month, day] = date[0].split("-");
             let nowDate = [month, day, year].join("-");
@@ -56,8 +55,7 @@ function citySearch() {
             nowIcon.src = `https://openweathermap.org/img/w/${data.list[0].weather[0].icon}.png`;
             nowIcon.alt = `${data.list[0].weather[0].main} icon`;
 
-            // Five day Forecast
-
+            // Forecast for thenext five days
             data.list.forEach((list) => {
                 let noon = list.dt_txt.split(" ");
                 if (noon[1] === "12:00:00") {
@@ -68,8 +66,15 @@ function citySearch() {
                     let listTemp = list.main.temp;
                     let listWind = `${list.wind.speed} MPH`;
                     let listHumidity = `${list.main.humidity}%`;
-                    fiveDayDiv.setAttribute("class", "w-100 p-4 flex justify-between bg-[#02182B] text-white");
-                    forecastDiv.innerHTML += `<div class="flex flex-col border-2 border-[#0197f6] min-w-125 grow items-center bg-white"><div class="bg-[#0197f6] text-white w-full text-center font-semibold">${listDate}</div><img class="w-16 h-16" src="${listIcon}" alt="${listIconAlt}"></img><div>Temp: ${listTemp}</div><div>Wind: ${listWind}</div><div>Humidity: ${listHumidity}</div></div>`;
+                    fiveDayForecastDiv.setAttribute("class", "w-100 p-4 flex justify-between bg-[#1d5e95] text-white");
+                    forecastDiv.innerHTML +=
+                        `<div class="flex flex-col border-2 border-[#1d5e95] min-w-125 grow items-center bg-white">
+                    <div class="bg-[#1d5e95] text-white w-full text-center font-semibold">${listDate}</div>
+                    <img class="w-16 h-16" src="${listIcon}" alt="${listIconAlt}">
+                    </img><div>Temp: ${listTemp}</div>
+                    <div>Wind: ${listWind}</div>
+                    <div>Humidity: ${listHumidity}</div>
+                    </div>`;
                 }
             });
             let citySave = cityCriteria.value;
@@ -86,9 +91,9 @@ function citySearch() {
 }
 
 function searchHistoryFunction() {
-    cityToSearch = this.getAttribute("city");
-    city.value = cityToSearch;
-    cityCriteria();
+    searchCity = this.getAttribute("city");
+    cityCriteria.value = searchCity;
+    citySearch();
 }
 
 // EVENT LISTENERS
