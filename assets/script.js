@@ -18,13 +18,13 @@ let searchCity = cityCriteria.value;
 // FUNCTIONS
 function init() {
     // grab last search results from local storage, place on left side of page
-    searchHistory = JSON.parse(localStorage.getItem("cityCriteria")) || [];
+    searchHistory = JSON.parse(localStorage.getItem("citySearch")) || [];
     searchAreaDiv.innerHTML = "";
     searchHistory.forEach((search) => {
         let searchHistoryBtn = document.createElement("button");
         searchHistoryBtn.textContent = search.toUpperCase();
         //       searchHistoryBtn.textContent = search.charAt(0).toUpperCase() + search.slice(1).toLowerCase();
-        searchHistoryBtn.setAttribute("class", "bg-[#0197f6] w-full p-4 text-white font-bold");
+        searchHistoryBtn.setAttribute("class", "bg-[#1d5e95] w-full p-4 text-white font-bold");
         searchHistoryBtn.setAttribute("id", "searchHistoryBtn");
         searchHistoryBtn.setAttribute("name", "cityButton");
         searchHistoryBtn.setAttribute("city", search.toUpperCase());
@@ -36,7 +36,7 @@ function init() {
 
 //
 function citySearch() {
-    // Set City to change with the .val of the text input box
+    // Set City to change with the input in the text box
     let requestUrl = `https://api.openweathermap.org/data/2.5/forecast/?q=${cityCriteria.value}&units=imperial&appid=${appId}`;
     fetch(requestUrl)
         .then(function (response) {
@@ -96,7 +96,6 @@ function searchHistoryFunction() {
     citySearch();
 }
 
-// EVENT LISTENERS
 init();
 
 // searchBTN event listener
